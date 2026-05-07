@@ -1,0 +1,29 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+*.tfvars
+crash.log
+
+# Secrets
+*.pem
+.env
+.env.*
+secrets.txt
+*.secret
+gcp-key.json
+service-account*.json
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
