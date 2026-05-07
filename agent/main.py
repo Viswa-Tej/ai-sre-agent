@@ -31,7 +31,7 @@ if not GEMINI_API_KEY:
     sys.exit(1)
 
 GEMINI_URL = (
-    f"https://generativelanguage.googleapis.com/v1/models/"
+    f"https://generativelanguage.googleapis.com/v1beta/models/"
     f"{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
 )
 
