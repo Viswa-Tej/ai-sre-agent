@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-sre-agent
+  labels:
+    app: ai-sre-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-sre-agent
+  template:
+    metadata:
+      labels:
+        app: ai-sre-agent
+    spec:
+      containers:
+        - name: agent
+          image: ghcr.io/viswa-tej/ai-sre-agent/ai-sre-agent:latest
+          imagePullPolicy: Always
+          env:
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: gemini-secret
+                  key: api-key
+            - name: PROMETHEUS_URL
+              value: "http://monitoring-kube-prometheus-prometheus.default.svc.cluster.local:9090"
+            - name: POLL_INTERVAL_SECONDS
+              value: "60"
+            - name: GEMINI_MODEL
+              value: "gemini-1.5-flash"
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"

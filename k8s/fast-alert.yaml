@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: fast-crashloop-alert
+  labels:
+    release: monitoring
+spec:
+  groups:
+    - name: fast-alerts
+      rules:
+        - alert: PodCrashLoopingFast
+          expr: rate(kube_pod_container_status_restarts_total[2m]) > 0
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Pod {{ $labels.pod }} is crash-looping"
+            description: "Pod {{ $labels.pod }} in {{ $labels.namespace }} has restart rate > 0 for 1+ minute."
